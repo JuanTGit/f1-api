@@ -8,16 +8,18 @@ const getRaceAPI = async function (series, season) {
 const f1Form = document.getElementById('f1Form');
 
 
-function addToF1List(DriverStanding){
+function addToTable(DriverStanding){
     let f1List = document.querySelector('#f1List');
+    standings = f1data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
     let liEl = document.createElement('li');
-    liEl.innerText = `Driver name: ${DriverStanding.givenName} position: ${DriverStanding.position} Constructor: ${DriverStanding.ConstructorId}`
+    liEl.innerText = `Driver: ${DriverStanding.givenName} Position: ${DriverStanding.position} Constructor: ${DriverStanding.ConstructorId} wins: ${driver.wins}`
     f1List.append(liEl);
 }
 
 f1Form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    let f1FormName = e.target.f1Name.value;
-    let driverStandings = await addToF1List(f1FormName);
-    addToF1List(driverStandings)
+    let series = e.target.series.value;
+    let season = e.target.season.value;
+    let data = await getRaceAPI(series, season);
+    addToTable(data)
 })
